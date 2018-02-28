@@ -1,80 +1,80 @@
-name,software name,acronym
-Al Dente,Remote Health Checker,
-Al Dente,Remote Stroke Checker,
-Al Dente,TeleCare,
-Al Falfa,Lab Information System,LIS
-Al Pacca,myeHealth,YK-NT-NU
-Alan Rench,Pollution Alerts Datamart,PAD
-Amanda Huginkiss,Limited Operating Liability,LOL
-Anna Conda,Environmental Assessor Tool,
-Anna Nimmity,MicroStrategy,
-Anne Thrax,Water and Land Data Observer,WALDO
-Annita Job,Waste Observation System,
-Art A. Choake,Weather Analyzer Software System Unix Platform,WASSUP
-Art Dekko,Ambulance Schedule System,
-Art Major,myeHealth,ON
-Barb Wyre,Netcare Occupation & Observation Base System,NOOBS
-Benny Fitz,Weather and Ozone Observation Knowledge Emulator Enterpise Edition,WOOKEEE
-Biff Wellington,Chronic Disease Management,
-Brock Lee,World Terrain & Forestry,WTF
-Bud Light,Selected Analytical Methods,SAM
-Bunsen Burner,Find A Doctor,FAD
-Chester Field,Operating Map of Gastropathy,OMG
-Claire Voyant,List of Transactions and Redactions,LOTR
-Clay Potts,Care Manager,
-Crystal Ball,Drug Profile Viewer,DPV
-Crystal Ball,Pharmaceutical Information Program,PIP
-Derry Yare,Heart Abdomen and Head Assessor,HAHA
-Dot Matricks,Web Utility Table,WUT
-Douglas Furr,Remote Health Checker,
-Douglas Furr,Remote Stroke Checker,
-Douglas Furr,TeleCare,
-Dr. Chris P. Bacon,Heart Ultrasound Heatmaps,HUH
-Dr. Jed I. Knight,Radiology Information Systems,RIS
-Dyl Pickel,Snowmed Analyzer System Extended Edition,SASEE
-Filet Minyon,Storm Water Management,
-Frank Furter,Patient Admitter Tool,PAT
-Gene Poole,Fast Family Finder,
-Ginger Vitus,Provider Coverage Viewer,PCV
-Gladys Dunn,Surgical Information System,SIS
-Goldie Locke, Data & Utility Heuristics,DUH
-Harry Beard,Spillage Locator Tool,
-Honey Potts,Biosphere Air and Gas Interpreter,
-Ida Claire,Abdomen Tissue and Analysis Tool,AT-AT
-Ida Claire,Operating Map of Gastropathy,OMG
-Jack Uzzi,Transcription Magic Interpreter,TMI
-Justin Case,Download Urgent Medical Backups,DUMB
-Justin Thyme,Statistical Analysis System,SAS
-Kayne Kun,eReferral,
-Krystal Ball,Waste Electronic & Wireless Equipment,WEWE
-Leah Tarde, National Ozone Observatory Bot,NOOB
-Les Wynan,Total Mastering of Incisions,TMI
-Linda Hand,Environmental Home Manager,
-Lotta Noyes,Clinical Data Repository,CDR
-Mason Jarr,PharmaCare,
-Mike Raffone,myeHealth,NB-PE-NS-NL
-Neil Down, Sustainable Xeriscaping,SuX
-Ollie Gark,Statistical Package for Social Sciences,SPSS
-Paige Turner,Picture Archive and Communication System,PACS
-Pea Pu,Drug Profile Viewer,DPV
-Pea Pu,Pharmaceutical Information Program,PIP
-Pete Moss,Cisco WebEx,
-Polly Graff,Alternative Sewage System,
-Robyn Banks,Planetary Environmental Reference System,PERS
-Rocky Rhodes,myeHealth,AB-SK-MB
-Rod Curtains,myeHealth,BC
-Rusty Foord,Homecare System,
-Sandy Beech,Cleaning Product Analyzer,
-Seymore Butts,Original Record of Landscape and Yards,ORLY
-Sonny Day,Clinical Admission Manager,
-Stan Dupp,Relational Observation System Limited,ROFL
-Sue Flay,Free MySQL Logger,FML
-Sue Vlaki,Greenhouse Gas Analyzer,
-Tara Dactyl,Fixed Orthodontics Medical Operations,FOMO
-Tess Tamoni,myeHealth,QC
-Tom Foolery,Electronic Medical Record (Viewer),EMR
-Ty Kuhn,Provider Registry System,PRS
-Warren Peace,eHealthChart,
-Wazziz Naime,Electronic Lab System Interpolator,ELSI
-Wil Doolittle,Ambulance Supply System,
-Will Tickelu,Northern Ozone & Ocean Biome,NOOB
+approver_id,first_name,last_name,software_id,software name,acronym,province
+1,Al,Dente,1,Remote Health Checker,,
+1,Al,Dente,2,Remote Stroke Checker,,
+1,Al,Dente,3,TeleCare,,
+2,Al,Falfa,4,Lab Information System,LIS,
+2,Al,Pacca,5,myeHealth,YK-NT-NU,
+3,Alan,Rench,6,Pollution Alerts Datamart,PAD,
+4,Amanda,Huginkiss,7,Limited Operating Liability,LOL,
+5,Anna,Conda,8,Environmental Assessor Tool,,
+6,Anna,Nimmity,9,MicroStrategy,,
+7,Anne,Thrax,10,Water and Land Data Observer,WALDO,
+8,Annita,Job,11,Waste Observation System,,
+9,Art,Choake,12,Weather Analyzer Software System Unix Platform,WASSUP,
+10,Art,Dekko,13,Ambulance Schedule System,,
+11,Art,Major,5,myeHealth,,ON
+12,Barb,Wyre,14,Netcare Occupation & Observation Base System,NOOBS,
+13,Benny,Fitz,15,Weather and Ozone Observation Knowledge Emulator Enterpise Edition,WOOKEEE,
+14,Biff,16,Wellington,Chronic Disease Management,,
+15,Brock,Lee,17,World Terrain & Forestry,WTF,
+16,Bud,Light,18,Selected Analytical Methods,SAM,
+17,Bunsen,Burner,19,Find A Doctor,FAD,
+18,Chester,Field,20,Operating Map of Gastropathy,OMG,
+19,Claire,Voyant,21,List of Transactions and Redactions,LOTR,
+20,Clay,Potts,22,Care Manager,,
+21,Crystal,Ball,23,Drug Profile Viewer,DPV,
+21,Crystal,Ball,24,Pharmaceutical Information Program,PIP,
+22,Derry,Yare,25,Heart Abdomen and Head Assessor,HAHA,
+23,Dot,Matricks,26,Web Utility Table,WUT,
+24,Douglas,Furr,27,Remote Health Checker,,
+24,Douglas,Furr,28,Remote Stroke Checker,,
+24,Douglas,Furr,29,TeleCare,,
+25,Chris,Bacon,30,Heart Ultrasound Heatmaps,HUH,
+26,Jed,Knight,31,Radiology Information Systems,RIS,
+27,Dyl,Pickel,32,Snowmed Analyzer System Extended Edition,SASEE,
+28,Filet,Minyon,33,Storm Water Management,,
+29,Frank,Furter,34,Patient Admitter Tool,PAT,
+30,Gene,Poole,35,Fast Family Finder,,
+31,Ginger,Vitus,36,Provider Coverage Viewer,PCV,
+32,Gladys,Dunn,37,Surgical Information System,SIS,
+33,Goldie,Locke,38,Data & Utility Heuristics,DUH,
+34,Harry,Beard,39,Spillage Locator Tool,,
+35,Honey,Potts,40,Biosphere Air and Gas Interpreter,,
+36,Ida,Claire,41,Abdomen Tissue and Analysis Tool,AT-AT,
+36,Ida,Claire,42,Operating Map of Gastropathy,OMG,
+37,Jack,Uzzi,43,Transcription Magic Interpreter,TMI,
+38,Justin,Case,44,Download Urgent Medical Backups,DUMB,
+39,Justin,Thyme,45,Statistical Analysis System,SAS,
+40,Kayne,Kun,46,eReferral,,
+41,Krystal,Ball,47,Waste Electronic & Wireless Equipment,WEWE,
+42,Leah,Tarde,48,National Ozone Observatory Bot,NOOB,
+43,Les,Wynan,49,Total Mastering of Incisions,TMI,
+44,Linda,Hand,50,Environmental Home Manager,,
+45,Lotta,Noyes,51,Clinical Data Repository,CDR,
+46,Mason,Jarr,52,PharmaCare,,
+47,Mike,Raffone,5,myeHealth,,NB-PE-NS-NL
+48,Neil,Down,53,Sustainable Xeriscaping,SuX,
+49,Ollie,Gark,54,Statistical Package for Social Sciences,SPSS,
+50,Paige,Turner,55,Picture Archive and Communication System,PACS,
+51,Pea,Pu,56,Drug Profile Viewer,DPV,
+51,Pea,Pu,57,Pharmaceutical Information Program,PIP,
+52,Pete,Moss,58,Cisco WebEx,,
+53,Polly,Graff,59,Alternative Sewage System,,
+54,Robyn,Banks,60,Planetary Environmental Reference System,PERS,
+55,Rocky,Rhodes,5,myeHealth,,AB-SK-MB
+56,Rod,Curtains,5,myeHealth,,BC
+57,Rusty,Foord,61,Homecare System,,
+58,Sandy,Beech,62,Cleaning Product Analyzer,,
+59,Seymore,Butts,63,Original Record of Landscape and Yards,ORLY,
+60,Sonny,Day,64,Clinical Admission Manager,,
+61,Stan,Dupp,65,Relational Observation System Limited,ROFL,
+62,Sue,Flay,66,Free MySQL Logger,FML,
+63,Sue,Vlaki,67,Greenhouse Gas Analyzer,,
+64,Tara,Dactyl,68,Fixed Orthodontics Medical Operations,FOMO,
+65,Tess,Tamoni,5,myeHealth,,QC
+66,Tom,Foolery,69,Electronic Medical Record (Viewer),EMR,
+67,Ty,Kuhn,70,Provider Registry System,PRS,
+68,Warren,Peace,71,eHealthChart,,
+69,Wazziz,Naime,72,Electronic Lab System Interpolator,ELSI,
+70,Wil,Doolittle,73,Ambulance Supply System,,
+71,Will,Tickelu,74,Northern Ozone & Ocean Biome,NOOB,
