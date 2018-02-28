@@ -1,2 +1,2 @@
-user_id,software_id,approver_id,approved_status
-1,1,1,0
+user_id,software_id,approver_id,approved_status,access
+1,1,1,0,0
