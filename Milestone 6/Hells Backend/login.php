@@ -30,7 +30,11 @@
 		$type = "analyst";
 	}
 	
-	$sql = "SELECT " . $id . ", user_name, password FROM " . $type . " WHERE user_name = '$user_name' and password = '$user_pass'";
+	$safe_user_name = mysqli_real_escape_string($conn, $user_name);
+	$safe_user_pass = mysqli_real_escape_string($conn, $user_pass);
+	$safe_type = mysqli_real_escape_string($conn, $type);
+	
+	$sql = "SELECT " . $id . ", user_name, password FROM " . $safe_type . " WHERE user_name = '$safe_user_name' and password = '$safe_user_pass'";
 	
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_assoc($result);

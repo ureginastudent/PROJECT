@@ -10,7 +10,17 @@
 		die("Invalid parameters");
 	}
 
-	$sql = "select * FROM software_request WHERE user_id = '$user_id'";
+	$safe_variable = mysqli_real_escape_string($conn, $user_id);
+	$sql = "";
+	
+	if ($safe_variable == "*")
+	{
+		$sql = "select * FROM software_request";
+	}
+	else
+	{
+	    $sql = "select * FROM software_request WHERE user_id = '$safe_variable'";
+	}
 
 	if (mysqli_query($conn, $sql))
 	{
