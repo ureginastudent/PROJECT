@@ -9,4 +9,4 @@ CREATE TABLE User (
 );
 
 -- populate with users
-insert into User (user_id, first_name, last_name, user_name, email, password) values (1, '', '', '', '', '');
+insert into User (user_id, user_name, email, password) values (1, '', '', '');

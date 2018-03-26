@@ -60,7 +60,6 @@ else {
 }
 
 // creates table for software requests
-
 $sql = "CREATE TABLE Software_Request (
   request_id int(10) NOT NULL,
   user_id int(10) NOT NULL,
@@ -74,6 +73,25 @@ $sql = "CREATE TABLE Software_Request (
 
 if (mysqli_query($conn, $sql)) {
     echo "\nTable Software_Request created successfully.\n";
+} 
+else {
+    echo "Error creating table: " . mysqli_error($conn);
+}
+
+// creates table for Approver_and_Software
+$sql = "CREATE TABLE Approver_and_Software (
+	approver_ID int(10) NOT NULL,
+	first_name varchar(30) NOT NULL,
+	last_name varchar(30) NOT NULL,
+	software_id varchar(30) NOT NULL,
+  software_name varchar(30) NOT NULL,
+  acronym varchar(10) NOT NULL,
+  province varchar(20) NOT NULL,
+  PRIMARY KEY (approver_id)
+  )";
+
+if (mysqli_query($conn, $sql)) {
+    echo "\nTable Approver_and_Software created successfully.\n";
 } 
 else {
     echo "Error creating table: " . mysqli_error($conn);
