@@ -15,6 +15,7 @@ namespace HELLs_FrontEnd
         private Data.User userSession;
         private CollectionList<ListViewItem> pendingItems = new CollectionList<ListViewItem>();
         private List<Web.Software.RootObject> softwareList;
+        private CollectionList<ListViewItem> approvedItems = new CollectionList<ListViewItem>();
 
         public User()
         {
@@ -24,6 +25,11 @@ namespace HELLs_FrontEnd
         private void OnPendingAdd(object sender, EventArgs e)
         {
             listView2.Items.Add((ListViewItem)sender);
+        }
+
+        private void OnApprovedAdd(object sender, EventArgs e)
+        {
+            listView3.Items.Add((ListViewItem)sender);
         }
 
         private void User_Load(object sender, EventArgs e)
@@ -66,7 +72,18 @@ namespace HELLs_FrontEnd
                                 if (item.Text == software.software_name && item.SubItems[2].Text == (software.first_name + " " + software.last_name))
                                 {
                                     listView1.Items.Remove(item);
-                                    pendingItems.Add(item);
+
+                                    if (softwareRequest.approved_status == "pending")
+                                    {
+                                        pendingItems.Add(item);
+                                    }
+                                    else if (softwareRequest.approved_status == "approved")
+                                    {
+                                        approvedItems.Add(item);
+                                    }
+
+
+                                    
                                 }
                             }
                         }
@@ -92,6 +109,11 @@ namespace HELLs_FrontEnd
         }
 
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }
