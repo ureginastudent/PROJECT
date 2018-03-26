@@ -26,6 +26,19 @@ namespace HELLs_FrontEnd.Web
             return software;
         }
         
+        private static async Task<List<Software.Request>> RetrieveSoftwareRequests(WebClient webClient, string Path)
+        {
+            string softwareRequestsJSON = await webClient.DownloadString(Path);
+            List<Software.Request> software = null;
+
+            if (softwareRequestsJSON != null)
+            {
+                software = JsonConvert.DeserializeObject<List<Software.Request>>(softwareRequestsJSON);
+            }
+
+            return software;
+        }
+
         public static async Task<List<Software.RootObject>> RetrieveSoftwareList()
         {
             HttpClientFactory Factory = new HttpClientFactory();
@@ -43,6 +56,25 @@ namespace HELLs_FrontEnd.Web
             }
 
             return softwareList;
+        }
+
+        public static async Task<List<Software.Request>> RetrieveSoftwareRequests(string userId)
+        {
+            HttpClientFactory Factory = new HttpClientFactory();
+            WebClient webClient = Factory.CreateClient();
+
+            List<Software.Request> softwareRequestList = null;
+
+            try
+            {
+                softwareRequestList = await RetrieveSoftwareRequests(webClient, string.Format("retrieverequests.php?user_id={0}", userId));
+            }
+            catch (Exception)
+            {
+                softwareRequestList = null;
+            }
+
+            return softwareRequestList;
         }
        
     }

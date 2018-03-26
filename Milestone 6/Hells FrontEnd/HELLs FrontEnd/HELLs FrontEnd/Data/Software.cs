@@ -18,5 +18,14 @@ namespace HELLs_FrontEnd.Web
             public string software_acronym { get; set; }
             public string software_province { get; set; }
         }
+
+        public class Request
+        {
+            public string request_id { get; set; }
+            public string user_id { get; set; }
+            public string software_id { get; set; }
+            public string approver_id { get; set; }
+            public string approved_status { get; set; }
+        }
     }
 }
