@@ -63,34 +63,34 @@ namespace HELLs_FrontEnd
             {
                 foreach (var softwareRequest in softwareRequestList)
                 {
-                    foreach (var software in softwareList)
+                    var softwareName = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList(softwareRequest.software_id, softwareRequest.approver_id)).Result;
+
+                    if (softwareName == null)
+                        continue;
+
+                    var software = softwareName[0];
+
+                    foreach (ListViewItem item in listView1.Items)
                     {
-                        if (softwareRequest.software_id == software.software_id && softwareRequest.approver_id == software.approver_id)
+                        if (item.Text == software.software_name && item.SubItems[2].Text == (software.first_name + " " + software.last_name))
                         {
-                            foreach (ListViewItem item in listView1.Items)
+                            listView1.Items.Remove(item);
+
+                            if (softwareRequest.approved_status == "pending")
                             {
-                                if (item.Text == software.software_name && item.SubItems[2].Text == (software.first_name + " " + software.last_name))
-                                {
-                                    listView1.Items.Remove(item);
-
-                                    if (softwareRequest.approved_status == "pending")
-                                    {
-                                        pendingItems.Add(item);
-                                    }
-                                    else if (softwareRequest.approved_status == "approved")
-                                    {
-                                        approvedItems.Add(item);
-                                    }
-
-
-                                    
-                                }
+                                pendingItems.Add(item);
+                            }
+                            else if (softwareRequest.approved_status == "approved")
+                            {
+                                approvedItems.Add(item);
                             }
                         }
                     }
-                    
                 }
+
+
             }
+
         }
 
         public void SetUserSession(Data.User _userSession)

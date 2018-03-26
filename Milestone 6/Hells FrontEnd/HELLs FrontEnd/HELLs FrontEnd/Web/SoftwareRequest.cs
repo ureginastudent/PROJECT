@@ -58,6 +58,26 @@ namespace HELLs_FrontEnd.Web
             return softwareList;
         }
 
+        public static async Task<List<Software.RootObject>> RetrieveSoftwareList(string softwareId, string approverId)
+        {
+            HttpClientFactory Factory = new HttpClientFactory();
+            WebClient webClient = Factory.CreateClient();
+
+            List<Software.RootObject> softwareList = null;
+
+            try
+            {
+                softwareList = await RetrieveSoftware(webClient, string.Format("retrievesoftware.php?software_id={0}&approver_id={1}", softwareId, approverId));
+            }
+            catch (Exception)
+            {
+                softwareList = null;
+            }
+
+            return softwareList;
+        }
+
+
         public static async Task<List<Software.Request>> RetrieveSoftwareRequests(string userId)
         {
             HttpClientFactory Factory = new HttpClientFactory();

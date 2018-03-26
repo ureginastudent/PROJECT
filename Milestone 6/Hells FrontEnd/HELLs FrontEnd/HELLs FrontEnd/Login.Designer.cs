@@ -72,9 +72,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(8, 118);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Authenticate As:";
+            this.label3.Text = "Login As:";
             // 
             // authBox
             // 
