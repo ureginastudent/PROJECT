@@ -22,14 +22,24 @@ namespace HELLs_FrontEnd
             InitializeComponent();
         }
 
-        private void OnPendingApproval(object sender, EventArgs e)
+        private void OnPendingApprovalAdd(object sender, EventArgs e)
         {
             listView1.Items.Add((ListViewItem)sender);
         }
 
-        private void OnPendingAccess(object sender, EventArgs e)
+        private void OnPendingAccessAdd(object sender, EventArgs e)
         {
             listView2.Items.Add((ListViewItem)sender);
+        }
+
+        private void OnPendingAccessRemove(object sender, EventArgs e)
+        {
+            listView2.Items.Remove((ListViewItem)sender);
+        }
+
+        private void OnPendingApprovalRemove(object sender, EventArgs e)
+        {
+            listView1.Items.Remove((ListViewItem)sender);
         }
 
         private void AddSoftwareToList(Web.Software.RootObject softwarePiece, Web.Software.Request software, CollectionList<ListViewItem> List)
@@ -48,8 +58,11 @@ namespace HELLs_FrontEnd
         {
             var softwareRequestList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareRequests("*")).Result; //parse all requests
 
-            pendingApprovalList.OnAdd += OnPendingApproval;
-            pendingAccessList.OnAdd += OnPendingAccess;
+            pendingApprovalList.OnAdd += new EventHandler(OnPendingApprovalAdd);
+            pendingAccessList.OnAdd += new EventHandler(OnPendingAccessAdd);
+
+            pendingAccessList.OnRemove += new EventHandler(OnPendingAccessRemove);
+            pendingApprovalList.OnRemove += new EventHandler(OnPendingApprovalRemove);
 
             foreach (var software in softwareRequestList)
             {

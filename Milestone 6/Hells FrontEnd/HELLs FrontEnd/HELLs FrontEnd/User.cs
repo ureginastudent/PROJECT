@@ -14,7 +14,7 @@ namespace HELLs_FrontEnd
     {
         private Data.User userSession;
         private CollectionList<ListViewItem> pendingItems = new CollectionList<ListViewItem>();
-        private List<Web.Software.RootObject> softwareList;
+        private CollectionList<ListViewItem> softwareItems = new CollectionList<ListViewItem>();
         private CollectionList<ListViewItem> approvedItems = new CollectionList<ListViewItem>();
 
         public User()
@@ -32,9 +32,40 @@ namespace HELLs_FrontEnd
             listView3.Items.Add((ListViewItem)sender);
         }
 
+        private void OnSoftwareAdd(object sender, EventArgs e)
+        {
+            listView1.Items.Add((ListViewItem)sender);
+        }
+
+        private void OnSoftwareRemove(object sender, EventArgs e)
+        {
+            listView1.Items.Remove((ListViewItem)sender);
+        }
+
+        private void OnApprovedRemove(object sender, EventArgs e)
+        {
+            listView3.Items.Remove((ListViewItem)sender);
+        }
+
+        private void OnPendingRemove(object sender, EventArgs e)
+        {
+            listView2.Items.Remove((ListViewItem)sender);
+        }
+
+        private void AddSoftwareToList(Web.Software.RootObject softwarePiece, CollectionList<ListViewItem> List)
+        {
+            ListViewItem item = new ListViewItem(softwarePiece.software_name);
+
+            item.SubItems.Add(softwarePiece.software_acronym);
+            item.SubItems.Add(softwarePiece.first_name + " " + softwarePiece.last_name);
+            item.SubItems.Add(softwarePiece.software_province);
+
+            List.Add(item);
+        }
+
         private void User_Load(object sender, EventArgs e)
         {
-            softwareList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList()).Result;
+            var softwareList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList()).Result;
 
 
             if (softwareList == null)
@@ -44,17 +75,26 @@ namespace HELLs_FrontEnd
             }
 
             namelbl.Text = "Logged in as " + userSession.UserName;
+
             pendingItems.OnAdd += new EventHandler(OnPendingAdd);
+            approvedItems.OnAdd += new EventHandler(OnApprovedAdd);
+            softwareItems.OnAdd += new EventHandler(OnSoftwareAdd);
+
+            pendingItems.OnRemove += new EventHandler(OnPendingRemove);
+            approvedItems.OnRemove += new EventHandler(OnApprovedRemove);
+            softwareItems.OnRemove += new EventHandler(OnSoftwareRemove);
 
             foreach (var software in softwareList)
             {
-                ListViewItem lvi = new ListViewItem(software.software_name);
+                AddSoftwareToList(software, softwareItems);
+
+                /*ListViewItem lvi = new ListViewItem(software.software_name);
 
                 lvi.SubItems.Add(software.software_acronym);
                 lvi.SubItems.Add(software.first_name + " " + software.last_name);
                 lvi.SubItems.Add(software.software_province);
 
-                listView1.Items.Add(lvi);
+                listView1.Items.Add(lvi);*/
             }
 
             var softwareRequestList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareRequests(userSession.Id.ToString())).Result;
@@ -70,11 +110,11 @@ namespace HELLs_FrontEnd
 
                     var software = softwareName[0];
 
-                    foreach (ListViewItem item in listView1.Items)
+                    foreach (var item in softwareItems)
                     {
                         if (item.Text == software.software_name && item.SubItems[2].Text == (software.first_name + " " + software.last_name))
                         {
-                            listView1.Items.Remove(item);
+                            softwareItems.Remove(item);
 
                             if (softwareRequest.approved_status == "pending")
                             {
