@@ -13,4 +13,4 @@ CREATE TABLE Software_Request (
 
 
 -- populate with software requests
-insert into Approver (approver_id, first_name, last_name, user_name, email, password) values (1, '', '', '', '', '');
+insert into Software_Request (request_id, user_id, software_id, approver_id, approved_status) values (1, 1, 1, 1, '');
