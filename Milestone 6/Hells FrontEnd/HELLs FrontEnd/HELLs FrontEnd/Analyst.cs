@@ -42,7 +42,7 @@ namespace HELLs_FrontEnd
             listView1.Items.Remove((ListViewItem)sender);
         }
 
-        private void AddSoftwareToList(Web.Software.RootObject softwarePiece, Web.Software.Request software, CollectionList<ListViewItem> List)
+        private void AddSoftwareToList(Web.Software.RootObject softwarePiece, Web.Software.Request software, CollectionList<ListViewItem> List, Color col, object Tag, bool checkedState)
         {
             ListViewItem item = new ListViewItem(softwarePiece.software_name);
 
@@ -50,6 +50,9 @@ namespace HELLs_FrontEnd
             item.SubItems.Add(softwarePiece.first_name + " " + softwarePiece.last_name);
             item.SubItems.Add(softwarePiece.software_province);
             item.SubItems.Add(software.user_id);
+            item.Tag = Tag;
+            item.ForeColor = col;
+            item.Checked = checkedState;
 
             List.Add(item);
         }
@@ -64,9 +67,11 @@ namespace HELLs_FrontEnd
             pendingAccessList.OnRemove += new EventHandler(OnPendingAccessRemove);
             pendingApprovalList.OnRemove += new EventHandler(OnPendingApprovalRemove);
 
+            namelbl.Text = "Logged in as " + userSession.UserName;
+
             foreach (var software in softwareRequestList)
             {
-                var softwareList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList(software.software_id, software.approver_id)).Result;
+                var softwareList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList(software.software_id)).Result;
 
                 if (softwareList == null)
                     continue;
@@ -75,11 +80,15 @@ namespace HELLs_FrontEnd
 
                 if (software.approved_status == "pending")
                 {
-                    AddSoftwareToList(softwarePiece, software, pendingApprovalList);
+                    AddSoftwareToList(softwarePiece, software, pendingApprovalList, DefaultForeColor, software, false);
                 }
                 else if (software.approved_status == "approved|invalid")
                 {
-                    AddSoftwareToList(softwarePiece, software, pendingAccessList);
+                    AddSoftwareToList(softwarePiece, software, pendingAccessList, DefaultForeColor, software, false);
+                }
+                else if (software.approved_status == "pending approval")
+                {
+                    AddSoftwareToList(softwarePiece, software, pendingApprovalList, Color.Green, software, true);
                 }
             }
         }
@@ -87,6 +96,32 @@ namespace HELLs_FrontEnd
         public void SetUserSession(Data.Analyst _userSession)
         {
             userSession = _userSession;
+        }
+
+        private void listView1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            ListViewItem Item = listView1.Items[e.Index];
+            if (((Web.Software.Request)(Item.Tag)).approved_status == "pending approval")
+            {
+                e.NewValue = CheckState.Checked;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem Item in listView1.CheckedItems)
+            {
+                Web.Software.Request software = (Web.Software.Request)(Item.Tag);
+                if(software.approved_status == "pending")
+                {
+                    bool success = Task.Run(() => Web.SoftwareRequest.RequestApproval(software.software_id, software.user_id)).Result;
+                    if (success)
+                    {
+                        Item.ForeColor = Color.Green;
+                        software.approved_status = "pending approval";
+                    }
+                }
+            }
         }
     }
 }

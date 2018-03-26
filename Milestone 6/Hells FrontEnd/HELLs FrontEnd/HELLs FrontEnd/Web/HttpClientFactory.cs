@@ -12,7 +12,13 @@ namespace HELLs_FrontEnd.Web
     {
         public WebClient CreateClient()
         {
-            var client = new WebClient();
+            HttpClientHandler Handler = new HttpClientHandler();
+
+            Handler.CookieContainer = new System.Net.CookieContainer(); //cookies for sessions
+            Handler.UseCookies = true;
+
+            var client = new WebClient(Handler);
+
             SetupClientDefaults(client);
             return client;
         }
@@ -21,7 +27,7 @@ namespace HELLs_FrontEnd.Web
         {
             client.Timeout = TimeSpan.FromSeconds(30);
             client.BaseAddress = new Uri(WebConfig.webHost);
-
+           
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

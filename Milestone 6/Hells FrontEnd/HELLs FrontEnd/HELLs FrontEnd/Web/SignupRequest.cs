@@ -10,19 +10,18 @@ namespace HELLs_FrontEnd.Web
 {
     public static class SignupRequest
     {
-
         private static async Task<bool> Signup(WebClient webClient, string Path)
         {
             string Response = await webClient.DownloadString(Path);
-            MessageBox.Show(Response);
-
             return Response == "success" ? true : false;
         }
 
         public static async Task<bool> Signup(string Username, string Password, string Email)
         {
-            HttpClientFactory Factory = new HttpClientFactory();
-            WebClient webClient = Factory.CreateClient();
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return false;
 
             bool success = false;
 

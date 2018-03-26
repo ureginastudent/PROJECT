@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.namelbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -57,18 +57,18 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.namelbl});
             this.statusStrip1.Location = new System.Drawing.Point(0, 375);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(775, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // namelbl
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(101, 17);
-            this.toolStripStatusLabel1.Text = "Logged in as: Test";
+            this.namelbl.Name = "namelbl";
+            this.namelbl.Size = new System.Drawing.Size(101, 17);
+            this.namelbl.Text = "Logged in as: Test";
             // 
             // tabControl1
             // 
@@ -110,6 +110,7 @@
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listView1_ItemCheck);
             // 
             // columnHeader1
             // 
@@ -129,11 +130,12 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Location";
-            this.columnHeader4.Width = 116;
+            this.columnHeader4.Width = 137;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "User ID";
+            this.columnHeader5.Width = 500;
             // 
             // tabPage1
             // 
@@ -218,6 +220,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "Request Approval";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Analyst
             // 
@@ -244,7 +247,7 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel namelbl;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListView listView1;

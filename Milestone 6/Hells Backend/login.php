@@ -1,13 +1,14 @@
 <?php
 	include('connect.php');
+	session_start();
 	
 	$user_name = isset($_GET["user"]) ? $_GET["user"] : '';
     $user_pass  = isset($_GET["pass"]) ? $_GET["pass"] : '';
 	$type = isset($_GET["type"]) ? $_GET["type"] : '';
-	
-	
+
 	if (empty($user_name) || empty($user_pass) || empty($type))
 	{
+		session_destroy();
 		mysqli_close($conn);
 		die("Invalid parameters");
 	}
@@ -39,12 +40,22 @@
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_assoc($result);
 	
-	if (mysqli_num_rows($result)==0){
-		
+	if (mysqli_num_rows($result)==0)
+	{
+		session_destroy();
 		mysqli_close($conn);
 		die("Invalid Credentials");
 	}
 	
+	if ($safe_type == "hells_user")
+	{
+		$safe_type = "user";
+	}
+	
+	$_SESSION['login_id'] = $row[$id];
+	$_SESSION['login_type'] = $safe_type;
+	
+
 	echo "success:" . $row[$id];
 	
 	mysqli_close($conn);

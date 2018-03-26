@@ -1,19 +1,18 @@
 <?php
 	include('connect.php');
+	include('session.php');
 	
-	$approver_id = isset($_GET['approver_id']) ? $_GET['approver_id'] : '';
 	$software_id = isset($_GET['software_id']) ? $_GET['software_id'] : '';
 	$sql = "";
 	
-	if (empty($approver_id) || empty($software_id))
+	if (empty($software_id))
 	{
 		$sql = "select * FROM hells_software";
 	}
 	else
 	{
-		$safe_approver_id = mysqli_real_escape_string($conn, $approver_id);
 		$safe_software_id = mysqli_real_escape_string($conn, $software_id);
-		$sql = "select * FROM hells_software WHERE approver_id = '$safe_approver_id' and software_id = '$safe_software_id'";
+		$sql = "select * FROM hells_software WHERE software_id = '$safe_software_id'";
 	}
 	
 	if (mysqli_query($conn, $sql))

@@ -13,6 +13,11 @@ namespace HELLs_FrontEnd.Web
 {
     public static class SoftwareRequest
     {
+        private static async Task<bool> RequestSoftware(WebClient webclient, string Path)
+        {
+            return await webclient.DownloadString(Path) == "1";
+        }
+
         private static async Task<List<Software.RootObject>> RetrieveSoftware(WebClient webClient, string Path)
         {
             string softwareJSON = await webClient.DownloadString(Path);
@@ -26,6 +31,11 @@ namespace HELLs_FrontEnd.Web
             return software;
         }
         
+        private static async Task<bool> RequestApproval(WebClient webClient, string Path)
+        {
+            return await webClient.DownloadString(Path) == "1";
+        }
+
         private static async Task<List<Software.Request>> RetrieveSoftwareRequests(WebClient webClient, string Path)
         {
             string softwareRequestsJSON = await webClient.DownloadString(Path);
@@ -41,8 +51,10 @@ namespace HELLs_FrontEnd.Web
 
         public static async Task<List<Software.RootObject>> RetrieveSoftwareList()
         {
-            HttpClientFactory Factory = new HttpClientFactory();
-            WebClient webClient = Factory.CreateClient();
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return null;
 
             List<Software.RootObject> softwareList = null;
 
@@ -58,16 +70,18 @@ namespace HELLs_FrontEnd.Web
             return softwareList;
         }
 
-        public static async Task<List<Software.RootObject>> RetrieveSoftwareList(string softwareId, string approverId)
+        public static async Task<List<Software.RootObject>> RetrieveSoftwareList(string softwareId)
         {
-            HttpClientFactory Factory = new HttpClientFactory();
-            WebClient webClient = Factory.CreateClient();
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return null;
 
             List<Software.RootObject> softwareList = null;
 
             try
             {
-                softwareList = await RetrieveSoftware(webClient, string.Format("retrievesoftware.php?software_id={0}&approver_id={1}", softwareId, approverId));
+                softwareList = await RetrieveSoftware(webClient, string.Format("retrievesoftware.php?software_id={0}", softwareId));
             }
             catch (Exception)
             {
@@ -78,16 +92,19 @@ namespace HELLs_FrontEnd.Web
         }
 
 
-        public static async Task<List<Software.Request>> RetrieveSoftwareRequests(string userId)
+        public static async Task<List<Software.Request>> RetrieveSoftwareRequests(string optional = "")
         {
-            HttpClientFactory Factory = new HttpClientFactory();
-            WebClient webClient = Factory.CreateClient();
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return null;
 
             List<Software.Request> softwareRequestList = null;
 
             try
             {
-                softwareRequestList = await RetrieveSoftwareRequests(webClient, string.Format("retrieverequests.php?user_id={0}", userId));
+                softwareRequestList = await RetrieveSoftwareRequests(webClient, string.Format("retrieverequests.php?all={0}", optional));
+
             }
             catch (Exception)
             {
@@ -96,6 +113,50 @@ namespace HELLs_FrontEnd.Web
 
             return softwareRequestList;
         }
-       
+
+
+        public static async Task<bool> RequestSoftware(string softwareId)
+        {
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return false;
+
+            bool success = false;
+
+            try
+            {
+                success = await RequestSoftware(webClient, string.Format("submitrequest.php?software_id={0}", softwareId));
+            }
+            catch(Exception)
+            {
+                success = false;
+            }
+
+            return success;
+        }
+
+        public static async Task<bool> RequestApproval(string softwareId, string userId)
+        {
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return false;
+
+            bool success = false;
+
+            try
+            {
+                success = await RequestApproval(webClient, string.Format("requestapproval.php?user_id={0}&software_id={1}", userId, softwareId));
+
+            }
+            catch (Exception)
+
+            {
+                success = false;
+            }
+
+            return success;
+        }
     }
 }

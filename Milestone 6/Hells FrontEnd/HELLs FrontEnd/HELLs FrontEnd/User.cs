@@ -52,13 +52,14 @@ namespace HELLs_FrontEnd
             listView2.Items.Remove((ListViewItem)sender);
         }
 
-        private void AddSoftwareToList(Web.Software.RootObject softwarePiece, CollectionList<ListViewItem> List)
+        private void AddSoftwareToList(Web.Software.RootObject softwarePiece, CollectionList<ListViewItem> List, object Tag)
         {
             ListViewItem item = new ListViewItem(softwarePiece.software_name);
 
             item.SubItems.Add(softwarePiece.software_acronym);
             item.SubItems.Add(softwarePiece.first_name + " " + softwarePiece.last_name);
             item.SubItems.Add(softwarePiece.software_province);
+            item.Tag = Tag;
 
             List.Add(item);
         }
@@ -66,7 +67,6 @@ namespace HELLs_FrontEnd
         private void User_Load(object sender, EventArgs e)
         {
             var softwareList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList()).Result;
-
 
             if (softwareList == null)
             {
@@ -86,51 +86,43 @@ namespace HELLs_FrontEnd
 
             foreach (var software in softwareList)
             {
-                AddSoftwareToList(software, softwareItems);
-
-                /*ListViewItem lvi = new ListViewItem(software.software_name);
-
-                lvi.SubItems.Add(software.software_acronym);
-                lvi.SubItems.Add(software.first_name + " " + software.last_name);
-                lvi.SubItems.Add(software.software_province);
-
-                listView1.Items.Add(lvi);*/
+                AddSoftwareToList(software, softwareItems, software);
             }
 
             var softwareRequestList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareRequests(userSession.Id.ToString())).Result;
 
-            if (softwareRequestList.Count > 0)
+            foreach (var softwareRequest in softwareRequestList)
             {
-                foreach (var softwareRequest in softwareRequestList)
+                var softwareName = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList(softwareRequest.software_id)).Result;
+
+                if (softwareName == null)
+                    continue;
+
+                var software = softwareName[0];
+
+                /*Need to copy the list of items to enumerate through, for some reason listview does not implement cloneable*/
+
+                ListViewItem[] Copy = new ListViewItem[softwareItems.Count];
+
+                softwareItems.CopyTo(Copy);
+
+                foreach (var item in Copy)
                 {
-                    var softwareName = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList(softwareRequest.software_id, softwareRequest.approver_id)).Result;
-
-                    if (softwareName == null)
-                        continue;
-
-                    var software = softwareName[0];
-
-                    foreach (var item in softwareItems)
+                    if (item.Text == software.software_name && item.SubItems[2].Text == (software.first_name + " " + software.last_name))
                     {
-                        if (item.Text == software.software_name && item.SubItems[2].Text == (software.first_name + " " + software.last_name))
-                        {
-                            softwareItems.Remove(item);
+                        softwareItems.Remove(item);
 
-                            if (softwareRequest.approved_status == "pending")
-                            {
-                                pendingItems.Add(item);
-                            }
-                            else if (softwareRequest.approved_status == "approved")
-                            {
-                                approvedItems.Add(item);
-                            }
+                        if (softwareRequest.approved_status == "pending" || softwareRequest.approved_status == "pending approval" || softwareRequest.approved_status == "approved|invalid")
+                        {
+                            pendingItems.Add(item);
+                        }
+                        else if (softwareRequest.approved_status == "approved")
+                        {
+                            approvedItems.Add(item);
                         }
                     }
                 }
-
-
             }
-
         }
 
         public void SetUserSession(Data.User _userSession)
@@ -155,7 +147,19 @@ namespace HELLs_FrontEnd
 
         private void button1_Click(object sender, EventArgs e)
         {
+            foreach (ListViewItem item in listView1.CheckedItems)
+            {
+                Web.Software.RootObject root = (Web.Software.RootObject)item.Tag;
 
+                bool success = Task.Run(() => Web.SoftwareRequest.RequestSoftware(root.software_id)).Result;
+
+                if (success)
+                {
+                    softwareItems.Remove(item);
+                    pendingItems.Add(item);
+                }
+
+            }
         }
     }
 }

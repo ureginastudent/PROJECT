@@ -11,11 +11,12 @@ namespace HELLs_FrontEnd.Web
 {
     public static class LoginRequest
     {
+        public static WebClient webClient = null;
 
         /* I decided to not use polymorphism (Generate an abstract class for a loginsession, and inherit different types of authentication)
-         * and instead use reflection to populate the loginsession, this saves me the need to re-write the login subroutine for all authentication methods
-         */
-        
+        * and instead use reflection to populate the loginsession, this saves me the need to re-write the login subroutine for all authentication methods
+        */
+
         private static async Task<T> Login<T>(WebClient webClient, string Path, string Username, string Password)
         {
             string response = await webClient.DownloadString(Path);
@@ -51,13 +52,17 @@ namespace HELLs_FrontEnd.Web
         public static async Task<T> Login<T>(string Username, string Password)
         {
             HttpClientFactory Factory = new HttpClientFactory();
-            WebClient webClient = Factory.CreateClient();
+
+            if (webClient == null)
+                webClient = Factory.CreateClient();
+
+            if (webClient == null)
+                return default(T); //not successful in generating a client object
+
             T newUser = default(T);
 
             try
             {
-                //no type constraints
-
                 newUser = await Login<T>(webClient, string.Format("login.php?user={0}&pass={1}&type={2}", Username, Password, typeof(T).Name.ToString()), Username, Password);
             }
             catch (Exception)

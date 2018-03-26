@@ -7,8 +7,13 @@ using System.Net.Http;
 
 namespace HELLs_FrontEnd.Web
 {
-    public partial class WebClient : HttpClient
+    public class WebClient : HttpClient
     {
+        public WebClient(HttpClientHandler Handler) : base(Handler)
+        {
+            
+        }
+
         public async Task<String> DownloadString(string Path)
         {
             HttpResponseMessage response = await this.GetAsync(Path);
