@@ -156,5 +156,15 @@ namespace HELLs_FrontEnd
                 }
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Login log = new Login();
+            log.Show();
+
+            log.FormClosed += (s, args) => this.Close();
+
+            this.Hide();
+        }
     }
 }

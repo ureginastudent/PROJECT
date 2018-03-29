@@ -76,7 +76,7 @@ namespace HELLs_FrontEnd
             List.Add(item);
         }
 
-        private void User_Load(object sender, EventArgs e)
+        private void LoadSoftware()
         {
             var softwareList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareList()).Result;
 
@@ -85,18 +85,6 @@ namespace HELLs_FrontEnd
                 MessageBox.Show("Error retrieving software list, closing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
-
-            namelbl.Text = "Logged in as " + userSession.UserName;
-
-            pendingItems.OnAdd += new EventHandler(OnPendingAdd);
-            approvedItems.OnAdd += new EventHandler(OnApprovedAdd);
-            softwareItems.OnAdd += new EventHandler(OnSoftwareAdd);
-            deniedItems.OnAdd += new EventHandler(OnDeniedAdd);
-
-            pendingItems.OnRemove += new EventHandler(OnPendingRemove);
-            approvedItems.OnRemove += new EventHandler(OnApprovedRemove);
-            softwareItems.OnRemove += new EventHandler(OnSoftwareRemove);
-            deniedItems.OnRemove += new EventHandler(OnDeniedRemove);
 
             foreach (var software in softwareList)
             {
@@ -148,6 +136,26 @@ namespace HELLs_FrontEnd
             }
         }
 
+        private void User_Load(object sender, EventArgs e)
+        {
+
+
+            namelbl.Text = "Logged in as " + userSession.UserName;
+
+            pendingItems.OnAdd += new EventHandler(OnPendingAdd);
+            approvedItems.OnAdd += new EventHandler(OnApprovedAdd);
+            softwareItems.OnAdd += new EventHandler(OnSoftwareAdd);
+            deniedItems.OnAdd += new EventHandler(OnDeniedAdd);
+
+            pendingItems.OnRemove += new EventHandler(OnPendingRemove);
+            approvedItems.OnRemove += new EventHandler(OnApprovedRemove);
+            softwareItems.OnRemove += new EventHandler(OnSoftwareRemove);
+            deniedItems.OnRemove += new EventHandler(OnDeniedRemove);
+
+            LoadSoftware();
+
+        }
+
         public void SetUserSession(Data.User _userSession)
         {
             userSession = _userSession;
@@ -178,6 +186,9 @@ namespace HELLs_FrontEnd
 
                 if (success)
                 {
+                    item.BackColor = DefaultBackColor;
+                    item.ForeColor = DefaultForeColor;
+
                     softwareItems.Remove(item);
                     pendingItems.Add(item);
                 }
@@ -200,6 +211,64 @@ namespace HELLs_FrontEnd
                 }
 
             }
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void Search(ListView List, TextBox Text, int Index)
+        {
+            if (Text.Text != "")
+            {
+                foreach (ListViewItem item in List.Items)
+                {
+                    if (item.SubItems[Index].Text.ToLower().Contains(Text.Text.ToLower()))
+                    {
+                        item.BackColor = SystemColors.Highlight;
+                        item.ForeColor = SystemColors.HighlightText;
+                    }
+                    else
+                    {
+                        List.Items.Remove(item);
+                    }
+
+                }
+
+                if (List.SelectedItems.Count == 1)
+                {
+                    List.Focus();
+                }
+
+            }
+            else
+            {
+                List.Items.Clear();
+                LoadSoftware();
+            }
+        }
+
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            Search(listView1, textBox1, 0);
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            Search(listView1, textBox2, 1);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Login log = new Login();
+            log.Show();
+
+            log.FormClosed += (s, args) => this.Close();
+
+            this.Hide();
         }
     }
 }

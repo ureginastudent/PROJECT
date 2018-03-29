@@ -143,5 +143,15 @@ namespace HELLs_FrontEnd
         {
             submitApprovalRequest("3", listView2);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Login log = new Login();
+            log.Show();
+
+            log.FormClosed += (s, args) => this.Close();
+
+            this.Hide();
+        }
     }
 }
