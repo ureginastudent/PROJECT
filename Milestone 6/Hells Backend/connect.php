@@ -1,5 +1,5 @@
 <?php
-	$conn = mysqli_connect("localhost", "root", "pass", "hells");
+	$conn = mysqli_connect("localhost", "ellia20i", "123123", "ellia20i");
 	
 	if (!$conn) 
 	{ 

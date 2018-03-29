@@ -18,7 +18,8 @@ namespace HELLs_FrontEnd.Web
 
         public static async Task<bool> Signup(string Username, string Password, string Email)
         {
-            WebClient webClient = LoginRequest.webClient;
+            HttpClientFactory Factory = new HttpClientFactory();
+            WebClient webClient = Factory.CreateClient();
 
             if (webClient == null)
                 return false;
@@ -33,6 +34,9 @@ namespace HELLs_FrontEnd.Web
             {
                 success = false;
             }
+
+            webClient.Dispose();
+            
 
             return success;
         }

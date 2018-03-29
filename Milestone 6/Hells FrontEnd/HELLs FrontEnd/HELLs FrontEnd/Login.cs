@@ -69,7 +69,7 @@ namespace HELLs_FrontEnd
             }
 
             if (userSession == null)
-                MessageBox.Show("Invalid login credentials");
+                MessageBox.Show("Invalid login credentials", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 this.Hide();

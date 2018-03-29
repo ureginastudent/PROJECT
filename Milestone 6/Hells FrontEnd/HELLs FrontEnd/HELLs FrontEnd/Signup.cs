@@ -43,7 +43,7 @@ namespace HELLs_FrontEnd
 
             if (Errors.Length > 0)
             {
-                MessageBox.Show(Errors.ToString());
+                MessageBox.Show(Errors.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -51,17 +51,23 @@ namespace HELLs_FrontEnd
 
                 if (success)
                 {
-                    MessageBox.Show("Registeration success!");
+                    MessageBox.Show("Registeration success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
                 }
                 else
                 {
-                    MessageBox.Show("Registeration failed!");
+                    MessageBox.Show("Registeration failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Signup_Load(object sender, EventArgs e)
         {
 
         }

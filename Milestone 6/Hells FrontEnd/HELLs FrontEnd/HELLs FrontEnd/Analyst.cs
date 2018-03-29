@@ -12,6 +12,7 @@ namespace HELLs_FrontEnd
 {
     public partial class Analyst : Form
     {
+        private Dictionary<string, string> Decisions = new Dictionary<string, string>();
         private Data.Analyst userSession;
         private CollectionList<ListViewItem> pendingApprovalList = new CollectionList<ListViewItem>();
         private CollectionList<ListViewItem> pendingAccessList = new CollectionList<ListViewItem>();
@@ -60,6 +61,9 @@ namespace HELLs_FrontEnd
         private void Analyst_Load(object sender, EventArgs e)
         {
             var softwareRequestList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareRequests("*")).Result; //parse all requests
+
+            Decisions.Add("1", "approved|access");
+            Decisions.Add("2", "approved|denied");
 
             pendingApprovalList.OnAdd += new EventHandler(OnPendingApprovalAdd);
             pendingAccessList.OnAdd += new EventHandler(OnPendingAccessAdd);
@@ -120,6 +124,35 @@ namespace HELLs_FrontEnd
                         Item.ForeColor = Color.Green;
                         software.approved_status = "pending approval";
                     }
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem Item in listView2.CheckedItems)
+            {
+                Web.Software.Request software = (Web.Software.Request)(Item.Tag);
+               
+                bool success = Task.Run(() => Web.SoftwareRequest.GrantAccess(software.software_id, software.user_id, software.approver_id, "1")).Result;
+                if (success)
+                {
+                    software.approved_status = Decisions["1"];
+                    pendingAccessList.Remove(Item);
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem Item in listView2.CheckedItems)
+            {
+                Web.Software.Request software = (Web.Software.Request)(Item.Tag);
+                bool success = Task.Run(() => Web.SoftwareRequest.GrantAccess(software.software_id, software.user_id, software.approver_id, "2")).Result;
+                if (success)
+                {
+                    software.approved_status = Decisions["2"];
+                    pendingAccessList.Remove(Item);
                 }
             }
         }

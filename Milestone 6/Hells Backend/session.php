@@ -13,8 +13,6 @@
 	
 	$sql = "SELECT * FROM " . $user_type . " WHERE " . $user_type . "_id = '$user_id'";
 	
-	
-	
 	if (mysqli_query($conn, $sql)) 
 	{
 		$result        = mysqli_query($conn, $sql);

@@ -18,6 +18,21 @@ namespace HELLs_FrontEnd.Web
             return await webclient.DownloadString(Path) == "1";
         }
 
+        private static async Task<bool> RequestApproval(WebClient webClient, string Path)
+        {
+            return await webClient.DownloadString(Path) == "1";
+        }
+
+        private static async Task<bool> Approve(WebClient webClient, string Path)
+        {
+            return await webClient.DownloadString(Path) == "1";
+        }
+
+        private static async Task<bool> GrantAccess(WebClient webClient, string Path)
+        {
+            return await webClient.DownloadString(Path) == "1";
+        }
+
         private static async Task<List<Software.RootObject>> RetrieveSoftware(WebClient webClient, string Path)
         {
             string softwareJSON = await webClient.DownloadString(Path);
@@ -31,11 +46,6 @@ namespace HELLs_FrontEnd.Web
             return software;
         }
         
-        private static async Task<bool> RequestApproval(WebClient webClient, string Path)
-        {
-            return await webClient.DownloadString(Path) == "1";
-        }
-
         private static async Task<List<Software.Request>> RetrieveSoftwareRequests(WebClient webClient, string Path)
         {
             string softwareRequestsJSON = await webClient.DownloadString(Path);
@@ -115,7 +125,7 @@ namespace HELLs_FrontEnd.Web
         }
 
 
-        public static async Task<bool> RequestSoftware(string softwareId)
+        public static async Task<bool> RequestSoftware(string softwareId, bool rerequest = false)
         {
             WebClient webClient = LoginRequest.webClient;
 
@@ -126,9 +136,59 @@ namespace HELLs_FrontEnd.Web
 
             try
             {
-                success = await RequestSoftware(webClient, string.Format("submitrequest.php?software_id={0}", softwareId));
+                if (rerequest)
+                {
+                    success = await RequestSoftware(webClient, string.Format("submitrerequest.php?software_id={0}", softwareId));
+                }
+                else
+                    success = await RequestSoftware(webClient, string.Format("submitrequest.php?software_id={0}", softwareId));
             }
             catch(Exception)
+            {
+                success = false;
+            }
+
+            return success;
+        }
+
+
+        public static async Task<bool> Approve(string softwareId, string userId, string decision)
+        {
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return false;
+
+            bool success = false;
+
+            try
+            {
+                success = await Approve(webClient, string.Format("approve.php?user_id={0}&software_id={1}&decision={2}", userId, softwareId, decision));
+            }
+            catch (Exception)
+
+            {
+                success = false;
+            }
+
+            return success;
+        }
+
+        public static async Task<bool> GrantAccess(string softwareId, string userId, string approverId, string decision)
+        {
+            WebClient webClient = LoginRequest.webClient;
+
+            if (webClient == null)
+                return false;
+
+            bool success = false;
+
+            try
+            {
+                success = await GrantAccess(webClient, string.Format("grantaccess.php?user_id={0}&software_id={1}&decision={2}&approver={3}", userId, softwareId, decision, approverId));
+            }
+            catch (Exception)
+
             {
                 success = false;
             }

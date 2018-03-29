@@ -11,7 +11,7 @@
 	$software_id = isset($_GET['software_id']) ? $_GET['software_id'] : '';
 	$user_id_software = isset($_GET['user_id']) ? $_GET['user_id'] : '';
 	
-	if (empty($user_id) || empty($software_id))
+	if (empty($user_id_software) || empty($software_id))
 	{
 		mysqli_close($conn);
 		die("Invalid parameters");

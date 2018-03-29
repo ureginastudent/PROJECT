@@ -13,9 +13,11 @@ namespace HELLs_FrontEnd
     public partial class User : Form
     {
         private Data.User userSession;
+
         private CollectionList<ListViewItem> pendingItems = new CollectionList<ListViewItem>();
         private CollectionList<ListViewItem> softwareItems = new CollectionList<ListViewItem>();
         private CollectionList<ListViewItem> approvedItems = new CollectionList<ListViewItem>();
+        private CollectionList<ListViewItem> deniedItems = new CollectionList<ListViewItem>();
 
         public User()
         {
@@ -52,6 +54,16 @@ namespace HELLs_FrontEnd
             listView2.Items.Remove((ListViewItem)sender);
         }
 
+        private void OnDeniedAdd(object sender, EventArgs e)
+        {
+            listView4.Items.Add((ListViewItem)sender);
+        }
+
+        private void OnDeniedRemove(object sender, EventArgs e)
+        {
+            listView4.Items.Remove((ListViewItem)sender);
+        }
+
         private void AddSoftwareToList(Web.Software.RootObject softwarePiece, CollectionList<ListViewItem> List, object Tag)
         {
             ListViewItem item = new ListViewItem(softwarePiece.software_name);
@@ -70,7 +82,7 @@ namespace HELLs_FrontEnd
 
             if (softwareList == null)
             {
-                MessageBox.Show("Error retrieving software list, closing");
+                MessageBox.Show("Error retrieving software list, closing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
 
@@ -79,17 +91,19 @@ namespace HELLs_FrontEnd
             pendingItems.OnAdd += new EventHandler(OnPendingAdd);
             approvedItems.OnAdd += new EventHandler(OnApprovedAdd);
             softwareItems.OnAdd += new EventHandler(OnSoftwareAdd);
+            deniedItems.OnAdd += new EventHandler(OnDeniedAdd);
 
             pendingItems.OnRemove += new EventHandler(OnPendingRemove);
             approvedItems.OnRemove += new EventHandler(OnApprovedRemove);
             softwareItems.OnRemove += new EventHandler(OnSoftwareRemove);
+            deniedItems.OnRemove += new EventHandler(OnDeniedRemove);
 
             foreach (var software in softwareList)
             {
                 AddSoftwareToList(software, softwareItems, software);
             }
 
-            var softwareRequestList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareRequests(userSession.Id.ToString())).Result;
+            var softwareRequestList = Task.Run(() => Web.SoftwareRequest.RetrieveSoftwareRequests()).Result;
 
             foreach (var softwareRequest in softwareRequestList)
             {
@@ -114,11 +128,20 @@ namespace HELLs_FrontEnd
 
                         if (softwareRequest.approved_status == "pending" || softwareRequest.approved_status == "pending approval" || softwareRequest.approved_status == "approved|invalid")
                         {
+                            if (softwareRequest.approved_status == "pending approval")
+                                item.ForeColor = Color.SlateBlue;
+                            else if (softwareRequest.approved_status == "approved|invalid")
+                                item.ForeColor = Color.Green;
+
                             pendingItems.Add(item);
                         }
-                        else if (softwareRequest.approved_status == "approved")
+                        else if (softwareRequest.approved_status == "approved|access")
                         {
                             approvedItems.Add(item);
+                        }
+                        else if (softwareRequest.approved_status == "denied" || softwareRequest.approved_status == "approved|denied")
+                        {
+                            deniedItems.Add(item);
                         }
                     }
                 }
@@ -156,6 +179,23 @@ namespace HELLs_FrontEnd
                 if (success)
                 {
                     softwareItems.Remove(item);
+                    pendingItems.Add(item);
+                }
+
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listView4.CheckedItems)
+            {
+                Web.Software.RootObject root = (Web.Software.RootObject)item.Tag;
+
+                bool success = Task.Run(() => Web.SoftwareRequest.RequestSoftware(root.software_id, true)).Result;
+
+                if (success)
+                {
+                    deniedItems.Remove(item);
                     pendingItems.Add(item);
                 }
 
