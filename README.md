@@ -26,3 +26,12 @@ password: test
 (You can look in the backend folder in the hell.sql file for other approver's credentials)
 
 During the presentation the "pending" tab did not contain the requests selected, but in fact they did the foreground & background color were white which disabled us from viewing the requests.
+
+
+# How to use application
+
+1. Login as the user and select a software to request approval for
+2. Login as any analyst and process this approval request to the approver
+3. Login to the associated approver and you may deny or approve this request
+4. Login to any analyst and grant or deny access to the software (if it was approved in step 3)
+5. Login as the user and look at in the denied or approved tab for the results
