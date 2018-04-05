@@ -246,6 +246,10 @@ namespace HELLs_FrontEnd
             else
             {
                 List.Items.Clear();
+                listView2.Items.Clear();
+                listView3.Items.Clear();
+                listView4.Items.Clear();
+
                 LoadSoftware();
             }
         }

@@ -102,6 +102,7 @@
             // 
             // namelbl
             // 
+            this.namelbl.BackColor = System.Drawing.Color.Transparent;
             this.namelbl.Name = "namelbl";
             this.namelbl.Size = new System.Drawing.Size(118, 17);
             this.namelbl.Text = "toolStripStatusLabel1";

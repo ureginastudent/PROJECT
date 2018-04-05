@@ -67,6 +67,7 @@
             // 
             // namelbl
             // 
+            this.namelbl.BackColor = System.Drawing.Color.Transparent;
             this.namelbl.Name = "namelbl";
             this.namelbl.Size = new System.Drawing.Size(101, 17);
             this.namelbl.Text = "Logged in as: Test";
