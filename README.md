@@ -6,7 +6,7 @@
 - [x] Milestone 4
 - [x] Milestone 5
 - [x] Milestone 6
-- [ ] Milestone 7
+- [x] Milestone 7
 # How to use and accounts
 
 Download the frontend folder located in milestone6, and direct yourself to the bin/release folder.
